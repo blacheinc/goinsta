@@ -133,6 +133,77 @@ func (comments *Comments) Next() bool {
 	return false
 }
 
+// InstaComments allows user to interact with media (item) comments.
+type InstaComments struct {
+	err       error
+	Comments  []Comment
+	Item      *Item
+	MinID     string
+	NextMinID json.RawMessage `json:"next_min_id,omitempty"`
+}
+
+func (comments *InstaComments) setValues() {
+	for i := range comments.Comments {
+		comments.Comments[i].item = comments.Item
+		comments.Comments[i].setValues(comments.Item.insta)
+	}
+}
+
+// Next allows comment pagination.
+//
+// It is used to populate the LoadComment() method
+//
+// New comments are stored in comments.Comments
+func (i *InstaComments) Next() bool {
+	if i.err != nil {
+		return false
+	}
+
+	insta := i.Item.insta
+	nextMinID := i.MinID
+
+	query := map[string]string{}
+	if nextMinID != "" {
+		query["min_id"] = nextMinID
+	}
+
+	body, _, err := insta.sendRequest(
+		&reqOptions{
+			Endpoint: fmt.Sprintf(urlCommentSync, i.Item.ID),
+			Query:    query,
+		},
+	)
+	if err != nil {
+		i.err = err
+		return false
+	}
+
+	var resp InstaComments
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		i.err = err
+		return false
+	}
+
+	if resp.NextMinID != nil {
+		var nextID string
+		if err := json.Unmarshal(resp.NextMinID, &nextID); err != nil {
+			i.err = err
+			return false
+		}
+		i.MinID = nextID
+	}
+
+	i.Comments = resp.Comments
+	i.NextMinID = resp.NextMinID
+
+	i.setValues()
+	if i.MinID == "" {
+		i.err = ErrNoMore
+	}
+	return true
+}
+
 // Sync prepare Comments to receive comments.
 // Use Next to receive comments.
 //

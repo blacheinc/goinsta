@@ -32,10 +32,11 @@ type Media interface {
 // All Item has Images or Videos objects which contains the url(s).
 // You can use the Download function to get the best quality Image or Video from Item.
 type Item struct {
-	insta    *Instagram
-	media    Media
-	module   string
-	Comments *Comments `json:"-"`
+	insta        *Instagram
+	media        Media
+	module       string
+	Comments     *Comments `json:"-"`
+	instacomment *InstaComments
 
 	// Post Info
 	TakenAt           int64       `json:"taken_at"`
@@ -252,6 +253,15 @@ type Item struct {
 			} `json:"story_link_stickers"`
 		} `json:"music_asset_info"`
 	} `json:"story_music_stickers,omitempty"`
+}
+
+//LoadComments loads a media item comments
+//
+//The comments returned by it is an empty InstaComments
+//
+//Use Next() to receive comments
+func (item *Item) LoadComment() *InstaComments {
+	return &InstaComments{Item: item}
 }
 
 // Comment pushes a text comment to media item.
