@@ -361,6 +361,18 @@ func (insta *Instagram) Export(path string) error {
 	return os.WriteFile(path, bytes, 0o644)
 }
 
+// ExportAsString exports *Instagram object to string
+func (insta *Instagram) ExportAsString() (string, error) {
+	config := insta.ExportConfig()
+
+	bytes, err := json.Marshal(config)
+	if err != nil {
+		return "", err
+	}
+
+	return string(bytes), nil
+}
+
 // Export exports selected *Instagram object options to an io.Writer
 func (insta *Instagram) ExportIO(writer io.Writer) error {
 	config := insta.ExportConfig()
