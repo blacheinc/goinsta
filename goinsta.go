@@ -361,7 +361,7 @@ func (insta *Instagram) Export(path string) error {
 	return os.WriteFile(path, bytes, 0o644)
 }
 
-// ExportAsString exports *Instagram object to string
+// ExportAsString exports *Instagram object as string
 func (insta *Instagram) ExportAsString() (string, error) {
 	config := insta.ExportConfig()
 
@@ -481,6 +481,27 @@ func Import(path string, args ...interface{}) (*Instagram, error) {
 	}
 	defer f.Close()
 	return ImportReader(f, args...)
+}
+
+func ImportInsta(path string, args ...interface{}) (*Instagram, error) {
+
+	pathtobyte := []byte(path)
+	config := ConfigFile{}
+	err := json.Unmarshal(pathtobyte, &config)
+	if err != nil {
+		return nil, err
+	}
+	return ImportConfig(config, args...)
+}
+
+func ImportUserSession(path []byte, args ...interface{}) (*Instagram, error) {
+
+	config := ConfigFile{}
+	err := json.Unmarshal(path, &config)
+	if err != nil {
+		return nil, err
+	}
+	return ImportConfig(config, args...)
 }
 
 // Login performs instagram login sequence in close resemblance to the android apk.
