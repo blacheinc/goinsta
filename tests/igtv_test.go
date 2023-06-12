@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Davincible/goinsta/v3"
+	"github.com/Funmi4194/goinsta"
 )
 
 func TestIGTVChannel(t *testing.T) {

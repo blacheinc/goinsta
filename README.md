@@ -1,7 +1,7 @@
 
 ![goinsta logo](https://raw.githubusercontent.com/Davincible/goinsta/v1/resources/goinsta-image.png)
 
-[![GoDoc](https://godoc.org/github.com/Davincible/goinsta/v3?status.svg)](https://godoc.org/github.com/Davincible/goinsta/v3) [![Go Report Card](https://goreportcard.com/badge/github.com/Davincible/goinsta/v3)](https://goreportcard.com/report/github.com/Davincible/goinsta/v3)
+[![GoDoc](https://godoc.org/github.com/Funmi4194/goinsta?status.svg)](https://godoc.org/github.com/Funmi4194/goinsta) [![Go Report Card](https://goreportcard.com/badge/github.com/Funmi4194/goinsta)](https://goreportcard.com/report/github.com/Funmi4194/goinsta)
 
 ## Go Instagram Private API
 
@@ -30,7 +30,7 @@ me know through the issues or discussions.
 
 ### Package installation 
 
-`go get -u github.com/Davincible/goinsta/v3@latest`
+`go get -u github.com/Funmi4194/goinsta@latest`
 
 ### Example
 
@@ -40,7 +40,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Davincible/goinsta/v3"
+	"github.com/Funmi4194/goinsta"
 )
 
 func main() {  

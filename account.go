@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Davincible/goinsta/v3/utilities"
+	"github.com/Funmi4194/goinsta/utilities"
 )
 
 // Account is personal account object

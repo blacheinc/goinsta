@@ -15,8 +15,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/Davincible/goinsta/v3"
-	"github.com/Davincible/goinsta/v3/utilities"
+	"github.com/Funmi4194/goinsta"
+	"github.com/Funmi4194/goinsta/utilities"
 )
 
 func main() {
