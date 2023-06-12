@@ -373,6 +373,18 @@ func (insta *Instagram) ExportAsString() (string, error) {
 	return string(bytes), nil
 }
 
+// ExportAsBytes exports *Instagram object as bytes
+func (insta *Instagram) ExportAsByte() ([]byte, error) {
+	config := insta.ExportConfig()
+
+	bytes, err := json.Marshal(config)
+	if err != nil {
+		return nil, err
+	}
+
+	return bytes, nil
+}
+
 // Export exports selected *Instagram object options to an io.Writer
 func (insta *Instagram) ExportIO(writer io.Writer) error {
 	config := insta.ExportConfig()
@@ -483,7 +495,7 @@ func Import(path string, args ...interface{}) (*Instagram, error) {
 	return ImportReader(f, args...)
 }
 
-func ImportInsta(path string, args ...interface{}) (*Instagram, error) {
+func ImportPathString(path string, args ...interface{}) (*Instagram, error) {
 
 	pathtobyte := []byte(path)
 	config := ConfigFile{}
@@ -494,7 +506,7 @@ func ImportInsta(path string, args ...interface{}) (*Instagram, error) {
 	return ImportConfig(config, args...)
 }
 
-func ImportUserSession(path []byte, args ...interface{}) (*Instagram, error) {
+func ImportPathBytes(path []byte, args ...interface{}) (*Instagram, error) {
 
 	config := ConfigFile{}
 	err := json.Unmarshal(path, &config)
