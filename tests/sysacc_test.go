@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Funmi4194/goinsta"
+	"github.com/blacheinc/goinsta"
 )
 
 var errNoAPIKEY = errors.New("No Pixabay API Key has been found. Please add one to .env as PIXABAY_API_KEY")
