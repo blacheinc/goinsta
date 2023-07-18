@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Funmi4194/goinsta/utilities"
+	"github.com/blacheinc/goinsta/utilities"
 )
 
 // Instagram represent the main API handler
@@ -495,6 +495,7 @@ func Import(path string, args ...interface{}) (*Instagram, error) {
 	return ImportReader(f, args...)
 }
 
+// ImportPathString imports instagram configuration from a string path
 func ImportPathString(path string, args ...interface{}) (*Instagram, error) {
 
 	pathtobyte := []byte(path)
@@ -506,6 +507,7 @@ func ImportPathString(path string, args ...interface{}) (*Instagram, error) {
 	return ImportConfig(config, args...)
 }
 
+// ImportPathBytes imports instagram configuration from a byte path
 func ImportPathBytes(path []byte, args ...interface{}) (*Instagram, error) {
 
 	config := ConfigFile{}

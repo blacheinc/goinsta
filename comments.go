@@ -167,6 +167,7 @@ func (i *InstaComments) Next() bool {
 		query["min_id"] = nextMinID
 	}
 
+	// Send request to retrieve comments
 	body, _, err := insta.sendRequest(
 		&reqOptions{
 			Endpoint: fmt.Sprintf(urlCommentSync, i.Item.ID),
@@ -178,6 +179,7 @@ func (i *InstaComments) Next() bool {
 		return false
 	}
 
+	// Parse the response into a variable of type InstaComments
 	var resp InstaComments
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
@@ -194,6 +196,7 @@ func (i *InstaComments) Next() bool {
 		i.MinID = nextID
 	}
 
+	// Update the comments and nextMinID fields with the retrieved data
 	i.Comments = resp.Comments
 	i.NextMinID = resp.NextMinID
 
