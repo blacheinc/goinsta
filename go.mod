@@ -1,4 +1,4 @@
-module github.com/blacheinc/goinsta
+module github.com/Funmi4194/goinsta
 
 go 1.18
 

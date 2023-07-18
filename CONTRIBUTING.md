@@ -15,8 +15,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/blacheinc/goinsta"
-	"github.com/blacheinc/goinsta/utilities"
+	"github.com/Funmi4194/goinsta"
+	"github.com/Funmi4194/goinsta/utilities"
 )
 
 func main() {

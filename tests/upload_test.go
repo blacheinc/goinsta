@@ -8,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/blacheinc/goinsta"
+	"github.com/Funmi4194/goinsta"
 )
 
 func TestUploadPhoto(t *testing.T) {

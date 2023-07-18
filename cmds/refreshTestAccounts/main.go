@@ -10,7 +10,7 @@
 package main
 
 import (
-	"github.com/blacheinc/goinsta"
+	"github.com/Funmi4194/goinsta"
 )
 
 func main() {

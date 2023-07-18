@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/blacheinc/goinsta"
+	"github.com/Funmi4194/goinsta"
 )
 
 func TestMediaIDFromShortID(t *testing.T) {
