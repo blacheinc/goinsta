@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Funmi4194/goinsta"
+	"github.com/blacheinc/goinsta"
 )
 
 func TestFeedUser(t *testing.T) {
