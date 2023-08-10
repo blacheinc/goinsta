@@ -59,7 +59,7 @@ func main() {
 	}
 
 	var commentID string
-    // load comment fo a media item
+    // load comment for a media item
     media.Items[0].Sync()
 
 	// load comment 

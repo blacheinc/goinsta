@@ -303,6 +303,7 @@ floop:
 
 // DeleteByID allows you to select comment by its comment.ID and delete a
 // comment by a user.
+// Use Sync() to load/prepare comment before deleting
 func (comments *Comments) DeleteByID(commentID string) error {
 	insta := comments.item.insta
 	data, err := json.Marshal(map[string]interface{}{
