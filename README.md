@@ -26,7 +26,7 @@ This repository is an extended fork of [ahmdrz/goinsta](https://github.com/ahmdr
 `go get -u github.com/blacheinc/goinsta`
 
 
-### Delete a comment by its specified comment ID
+### Delete a comment by its specified comment id
 ```go
 package main
 
