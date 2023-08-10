@@ -301,6 +301,30 @@ floop:
 	return err
 }
 
+// DeleteByID allows you to select comment by its comment.ID and delete a
+// comment by a user.
+func (comments *Comments) DeleteByID(commentID string) error {
+	insta := comments.item.insta
+	data, err := json.Marshal(map[string]interface{}{
+		"comment_ids_to_delete": commentID,
+		"_uid":                  insta.Account.ID,
+		"_uuid":                 insta.uuid,
+		"container_module":      "feed_timeline",
+	})
+	if err != nil {
+		return err
+	}
+
+	_, _, err = insta.sendRequest(
+		&reqOptions{
+			Endpoint: fmt.Sprintf(urlCommentBulkDelete, comments.item.ID),
+			Query:    generateSignature(data),
+			IsPost:   true,
+		},
+	)
+	return err
+}
+
 // Comment is a type of Media retrieved by the Comments methods
 type Comment struct {
 	insta *Instagram

@@ -25,6 +25,55 @@ This repository is an extended fork of [ahmdrz/goinsta](https://github.com/ahmdr
 
 `go get -u github.com/blacheinc/goinsta`
 
+
+### Delete a comment by its specified comment ID
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/blacheinc/goinsta"
+)
+
+func main() {  
+    // import cookie 
+    insta, err := goinsta.ImportPathString("cookie")
+    if err != nil {
+		log.Fatal(err)
+	}
+
+    //retrieve postid from url
+	postId, err := GetPostId(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	mediaId, err := goinsta.MediaIDFromShortID(postId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//fetch all media
+	media, err := insta.GetMedia(mediaId)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var commentID string
+    // load comment fo a media item
+    media.Items[0].Sync()
+
+	// load comment 
+    comment := media.Items[0].Comments.DeleteByID(commentID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nil
+}
+	
+```
+
+
+
 ### Login and export/import cookie as string
 
 ```go
