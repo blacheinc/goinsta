@@ -57,12 +57,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// comment ID of the comment to be deleted
+	var commentID  = "1567648935796"
 
-	var commentID string
     // load comment for a media item
     media.Items[0].Sync()
 
-	// load comment 
+	// delete a comment by its ID
     comment := media.Items[0].Comments.DeleteByID(commentID)
 	if err != nil {
 		log.Fatal(err)
