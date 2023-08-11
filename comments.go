@@ -167,6 +167,7 @@ func (i *InstaComments) Next() bool {
 		query["min_id"] = nextMinID
 	}
 
+	// Send request to retrieve comments
 	body, _, err := insta.sendRequest(
 		&reqOptions{
 			Endpoint: fmt.Sprintf(urlCommentSync, i.Item.ID),
@@ -178,6 +179,7 @@ func (i *InstaComments) Next() bool {
 		return false
 	}
 
+	// Parse the response into a variable of type InstaComments
 	var resp InstaComments
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
@@ -194,6 +196,7 @@ func (i *InstaComments) Next() bool {
 		i.MinID = nextID
 	}
 
+	// Update the comments and nextMinID fields with the retrieved data
 	i.Comments = resp.Comments
 	i.NextMinID = resp.NextMinID
 
@@ -295,6 +298,31 @@ floop:
 		return err
 	}
 	err := comments.BulkDelete(cList)
+	return err
+}
+
+// DeleteByID allows you to select comment by its comment.ID and delete a
+// comment by a user.
+// Use Sync() to load/prepare comment before deleting
+func (comments *Comments) DeleteByID(commentID string) error {
+	insta := comments.item.insta
+	data, err := json.Marshal(map[string]interface{}{
+		"comment_ids_to_delete": commentID,
+		"_uid":                  insta.Account.ID,
+		"_uuid":                 insta.uuid,
+		"container_module":      "feed_timeline",
+	})
+	if err != nil {
+		return err
+	}
+
+	_, _, err = insta.sendRequest(
+		&reqOptions{
+			Endpoint: fmt.Sprintf(urlCommentBulkDelete, comments.item.ID),
+			Query:    generateSignature(data),
+			IsPost:   true,
+		},
+	)
 	return err
 }
 

@@ -1,22 +1,15 @@
 
 ![goinsta logo](https://raw.githubusercontent.com/Davincible/goinsta/v1/resources/goinsta-image.png)
 
-[![GoDoc](https://godoc.org/github.com/Funmi4194/goinsta?status.svg)](https://godoc.org/github.com/Funmi4194/goinsta) [![Go Report Card](https://goreportcard.com/badge/github.com/Funmi4194/goinsta)](https://goreportcard.com/report/github.com/Funmi4194/goinsta)
+[![GoDoc](https://godoc.org/github.com/blacheinc/goinsta?status.svg)](https://godoc.org/github.com/blacheinc/goinsta) [![Go Report Card](https://goreportcard.com/badge/github.com/blacheinc/goinsta)](https://goreportcard.com/report/github.com/blacheinc/goinsta)
 
 ## Go Instagram Private API
 
 > Unofficial Instagram API for Golang
 
-This repository has been forked from [ahmdrz/goinsta](https://github.com/ahmdrz/goinsta). 
-As the maintainer of this repositry has archived the project, and 
-the code in the repository was based on a few year old instagram app version, 
-since which a lot has changed, I have taken the courtesy to build upon his 
-great framework and update the code to be compatible with apk v250.0.0.21.109 
-(Aug 30, 2022). Walkthrough docs can be found in the 
-[wiki](https://github.com/Davincible/goinsta/wiki/1.-Getting-Started).
+This repository is an extended fork of [ahmdrz/goinsta](https://github.com/ahmdrz/goinsta). 
 
-If you are missing anything or something is not working as expected please let
-me know through the issues or discussions.
+
 
 ### Features
 
@@ -30,7 +23,140 @@ me know through the issues or discussions.
 
 ### Package installation 
 
-`go get -u github.com/Funmi4194/goinsta@latest`
+`go get -u github.com/blacheinc/goinsta`
+
+
+### Delete a comment by its specified comment ID
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/blacheinc/goinsta"
+)
+
+func main() {  
+    // import cookie 
+    insta, err := goinsta.ImportPathString("cookie")
+    if err != nil {
+		log.Fatal(err)
+	}
+
+    //retrieve postid from url
+	postId, err := GetPostId(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	mediaId, err := goinsta.MediaIDFromShortID(postId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//fetch all media
+	media, err := insta.GetMedia(mediaId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// set comment ID for the comment to be deleted
+	var commentID  = "1567648935796"
+
+    // load comment for a media item
+    media.Items[0].Sync()
+
+	// delete a comment by its ID
+    comment := media.Items[0].Comments.DeleteByID(commentID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+}
+	
+```
+
+
+
+### Login and export/import cookie as string
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/blacheinc/goinsta"
+)
+
+func main() {  
+  insta := goinsta.New("USERNAME", "PASSWORD")
+
+   // Only call Login the first time you login. Next time import your config
+	err := insta.Login()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
+// Export your configuration as string
+  // after exporting you can use ImportPathString function instead of New function.
+  // insta, err := goinsta.ImportPathString("cookie")
+  // it's useful when you want use goinsta repeatedly.
+	cookie, err := insta.ExportAsString()
+	if err != nil {
+	   log.Fatal(err)
+	}
+  // cookie can be saved and encrypted in a database 
+}
+```
+
+### Get comments on a post
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/blacheinc/goinsta"
+)
+
+func main() {  
+  // import cookie 
+  insta, err := goinsta.ImportPathString("cookie")
+  if err != nil {
+		log.Fatal(err)
+	}
+
+  //retrieve postid from url
+	postId, err := GetPostId(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	mediaId, err := goinsta.MediaIDFromShortID(postId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//fetch all media
+	media, err := insta.GetMedia(mediaId)
+	if err != nil {
+		log.Fatal(err)
+	}
+  // load comment 
+  comment := media.Items[0].LoadComment()
+	if err != nil {
+		log.Fatal(err)
+	}
+  // paginate to populate the comment
+  for comment.Next() {
+    // loop through to get all commments in a post
+		for _, comment := range comment.Comments {
+        // Print all users comments 
+				fmt.Println(comment.Text)
+			}
+		}
+}
+	
+```
+
 
 ### Example
 
@@ -40,7 +166,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Funmi4194/goinsta"
+	"github.com/blacheinc/goinsta"
 )
 
 func main() {  

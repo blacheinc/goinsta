@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Funmi4194/goinsta"
+	"github.com/blacheinc/goinsta"
 )
 
 // Random big accounts used for story reply and DM tests
