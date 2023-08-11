@@ -57,7 +57,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// set comment ID of the comment to be deleted
+	// set comment ID for the comment to be deleted
 	var commentID  = "1567648935796"
 
     // load comment for a media item
@@ -68,7 +68,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return nil
+	
 }
 	
 ```
